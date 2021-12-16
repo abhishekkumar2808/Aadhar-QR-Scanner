@@ -3,7 +3,9 @@ package com.ssn.aadhaar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.sax.Element;
 
 import com.google.zxing.Result;
@@ -77,7 +79,7 @@ public class scannerView extends AppCompatActivity implements ZXingScannerView.R
 
     private void toJSON(String data) throws JSONException {
 
-        String[] listOfString = data.split("\n",3);
+        String[] listOfString = data.split("[?]>",3);
 
         String metaData = listOfString[1];
         metaData = metaData.substring(24,metaData.length()-2);
@@ -95,7 +97,10 @@ public class scannerView extends AppCompatActivity implements ZXingScannerView.R
 
         }
         System.out.println("\n\nJSON data = "+json.toString());
-        MainActivity.scantext.setText(json.toString());
+//        MainActivity.scantext.setText(json.toString());
+            Intent dataIntent = new Intent(scannerView.this, FormActivity.class);
+            dataIntent.putExtra("data", json.toString());
+            startActivity(dataIntent);
 
     }
 
