@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.sax.Element;
+import android.util.Log;
 
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
@@ -78,7 +79,7 @@ public class scannerView extends AppCompatActivity implements ZXingScannerView.R
     }
 
     private void toJSON(String data) throws JSONException {
-
+        Log.d("fuck",data);
         String[] listOfString = data.split("[?]>",3);
 
         String metaData = listOfString[1];
@@ -98,6 +99,7 @@ public class scannerView extends AppCompatActivity implements ZXingScannerView.R
         }
         System.out.println("\n\nJSON data = "+json.toString());
 //        MainActivity.scantext.setText(json.toString());
+
             Intent dataIntent = new Intent(scannerView.this, FormActivity.class);
             dataIntent.putExtra("data", json.toString());
             startActivity(dataIntent);

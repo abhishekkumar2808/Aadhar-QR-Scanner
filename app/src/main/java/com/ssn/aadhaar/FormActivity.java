@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kazimasum.qrdemo.R;
@@ -30,6 +29,7 @@ public class FormActivity extends AppCompatActivity {
     EditText stateET;
     EditText pcET;
     EditText dobET;
+    JSONObject json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,29 +53,35 @@ public class FormActivity extends AppCompatActivity {
         dobET = findViewById(R.id.dobET);
 
         Intent dataIntent = getIntent();
-        JSONObject json=null;
+        json=null;
         try {
             json = new JSONObject(dataIntent.getStringExtra("data"));
-            UIDET.setText(json.get(" uid").toString());
-            nameET.setText(json.get("name").toString());
-            genderET.setText(json.get("gender").toString());
-            yobET.setText(json.get("yob").toString());
-            coET.setText(json.get("co").toString());
-            houseET.setText(json.get("house").toString());
-            streetET.setText(json.get("street").toString());
-            lmET.setText(json.get("lm").toString());
-            vtcET.setText(json.get("vtc").toString());
-            poET.setText(json.get("po").toString());
-            distET.setText(json.get("dist").toString());
-            subdistET.setText(json.get("subdist").toString());
-            stateET.setText(json.get("state").toString());
-            pcET.setText(json.get("pc").toString());
-            dobET.setText(json.get("dob").toString());
+            HasData("subdist",subdistET);
+            HasData(" uid",UIDET);
+            HasData("name",nameET);
+            HasData("yob",yobET);
+            HasData("co",coET);
+            HasData("house",houseET);
+            HasData("street",streetET);
+            HasData("gender",genderET);
+            HasData("lm",lmET);
+            HasData("vtc",vtcET);
+            HasData("dist",distET);
+            HasData("state",stateET);
+            HasData("po",poET);
+            HasData("pc",pcET);
+            HasData("dob",dobET);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(FormActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+
+    public void HasData(String data, EditText et) throws JSONException {
+        if(json.has(data)) {
+            et.setText(json.get(data).toString());
+        }
     }
 }
